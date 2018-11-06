@@ -1375,9 +1375,16 @@ public abstract void rocksdb_delete_file_in_range_cf(
 #endif
 #endregion
 
-// referring to convention (3), this should be used by client
-// to free memory that was malloc()ed
-public abstract void rocksdb_free(IntPtr ptr);
+        #region checkpoint
+        //extern ROCKSDB_LIBRARY_API rocksdb_checkpoint_t* rocksdb_checkpoint_object_create(rocksdb_t* db, char** errptr);
+        public abstract IntPtr rocksdb_checkpoint_object_create(IntPtr db, out IntPtr errptr);
+        //extern ROCKSDB_LIBRARY_API void rocksdb_checkpoint_create(rocksdb_checkpoint_t* checkpoint, const char* checkpoint_dir,uint64_t log_size_for_flush, char** errptr);
+        public abstract void rocksdb_checkpoint_create(IntPtr checkpoint, string checkpoint_dir, UInt64 log_size_for_flush, out IntPtr errptr);
+        //extern ROCKSDB_LIBRARY_API void rocksdb_checkpoint_object_destroy(rocksdb_checkpoint_t* checkpoint);
+        #endregion
+        // referring to convention (3), this should be used by client
+        // to free memory that was malloc()ed
+        public abstract void rocksdb_free(IntPtr ptr);
 
 /* END c.h */
 }
